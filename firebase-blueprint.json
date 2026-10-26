@@ -1,0 +1,125 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Agent user profile storing balance, preferences, domain, and security settings",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Unique Google user ID"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Reseller or agent business name"
+        },
+        "email": {
+          "type": "string",
+          "description": "Account email address"
+        },
+        "phone": {
+          "type": "string",
+          "description": "Agent mobile number"
+        },
+        "domain": {
+          "type": "string",
+          "description": "SBS server domain URL"
+        },
+        "mainBalance": {
+          "type": "number",
+          "description": "Main recharge balance in BDT"
+        },
+        "driveBalance": {
+          "type": "number",
+          "description": "Drive pack cashback balance in BDT"
+        },
+        "bankBalance": {
+          "type": "number",
+          "description": "Mobile banking reserve balance in BDT"
+        },
+        "pin": {
+          "type": "string",
+          "description": "4-digit security authorization PIN"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when profile was created (FieldValue.serverTimestamp)"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when profile was last modified (FieldValue.serverTimestamp)"
+        }
+      },
+      "required": ["userId", "displayName", "email", "domain", "mainBalance", "pin", "createdAt", "updatedAt"]
+    },
+    "TransactionRecord": {
+      "title": "TransactionRecord",
+      "description": "Log of completed recharge, banking, or bill payment operation",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique transaction ID"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Owning agent user ID"
+        },
+        "type": {
+          "type": "string",
+          "description": "Operation type: Recharge, bKash, Rocket, Nagad, BillPay, Payment"
+        },
+        "recipient": {
+          "type": "string",
+          "description": "Target phone number or meter number"
+        },
+        "operatorOrProvider": {
+          "type": "string",
+          "description": "Telecom operator or utility provider name"
+        },
+        "amount": {
+          "type": "number",
+          "description": "Transacted amount in BDT"
+        },
+        "commission": {
+          "type": "number",
+          "description": "Reseller commission earned in BDT"
+        },
+        "status": {
+          "type": "string",
+          "description": "Transaction status (SUCCESS, PENDING, FAILED)"
+        },
+        "trxId": {
+          "type": "string",
+          "description": "Operator transaction reference code"
+        },
+        "balanceAfter": {
+          "type": "number",
+          "description": "Main balance after execution"
+        },
+        "reference": {
+          "type": "string",
+          "description": "Note or package description"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when transaction completed (FieldValue.serverTimestamp)"
+        }
+      },
+      "required": ["id", "userId", "type", "recipient", "operatorOrProvider", "amount", "commission", "status", "trxId", "balanceAfter", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Individual agent profile scoped to authenticated user ID"
+    },
+    "/users/{userId}/transactions/{transactionId}": {
+      "schema": "TransactionRecord",
+      "description": "Subcollection of financial and recharge transactions owned by the user"
+    }
+  }
+}

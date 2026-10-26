@@ -1,0 +1,6 @@
+{
+  "name": "SBS Pro",
+  "description": "SBS Pro multi-recharge, mobile banking (bKash, Rocket, Bill Pay), operator packages, and financial reporting system.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
